@@ -3,11 +3,11 @@
 
 #include <string>
 
-class upMessage
+class UpMessage
 {
 public:
-    upMessage();
-    virtual ~upMessage();
+    UpMessage();
+    virtual ~UpMessage();
 
     void reset();
 
