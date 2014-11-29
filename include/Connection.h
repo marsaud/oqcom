@@ -4,17 +4,23 @@
 #include <sstream>
 #include <vector>
 
+#include <iostream>
 #include <boost/asio.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/bind.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
-class Connection
+class Connection : public boost::enable_shared_from_this<Connection>
 {
 public:
-    Connection(boost::asio::io_service& io_service);
+
     virtual ~Connection();
+
+    typedef boost::shared_ptr<Connection> connection_ptr;
+
+    static Connection::connection_ptr create(boost::asio::io_service& ios);
 
     boost::asio::ip::tcp::socket& socket();
 
@@ -122,8 +128,11 @@ public:
             boost::get<0>(handler)(e);
         }
     }
+
 protected:
 private:
+    Connection(boost::asio::io_service& io_service);
+
     boost::asio::ip::tcp::socket m_socket; // (1)
 
     // Taille de l'header.
@@ -134,8 +143,6 @@ private:
     char m_inbound_header[header_length];
     std::vector<char> m_inbound_data;
 };
-
-typedef boost::shared_ptr<Connection> connection_ptr;
 
 #endif // CONNECTION_H
 

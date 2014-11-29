@@ -9,12 +9,14 @@ public:
     UpMessage();
     virtual ~UpMessage();
 
+    enum {PERSON_CONNECTED, PERSON_LEFT};
+
     void reset();
 
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {
-        ar << m_type << m_message << m_login;
+        ar & m_type & m_message & m_login;
     }
 
     int m_type;
