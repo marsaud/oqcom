@@ -3,7 +3,6 @@
 
 #include <string>
 #include "Player.h"
-#include "oq.h"
 
 class UpMessage
 {
@@ -19,8 +18,8 @@ public:
         ar & m_move & m_action;
     }
 
-    oq::Move m_move;
-    oq::Action m_action;
+    Player::Move m_move;
+    Player::Action m_action;
 
 protected:
 private:

@@ -12,6 +12,6 @@ UpMessage::~UpMessage()
 
 void UpMessage::reset()
 {
-    m_move = oq::MOVE_NOT;
-    m_action = oq::ACTION_NONE;
+    m_move = Player::MOVE_NOT;
+    m_action = Player::ACTION_NONE;
 }
