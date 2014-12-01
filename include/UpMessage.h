@@ -2,6 +2,8 @@
 #define UPMESSAGE_H
 
 #include <string>
+#include "Player.h"
+#include "oq.h"
 
 class UpMessage
 {
@@ -9,19 +11,16 @@ public:
     UpMessage();
     virtual ~UpMessage();
 
-    enum {PERSON_CONNECTED, PERSON_LEFT};
-
     void reset();
 
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version)
     {
-        ar & m_type & m_message & m_login;
+        ar & m_move & m_action;
     }
 
-    int m_type;
-    std::string	m_message;
-    std::string	m_login;
+    oq::Move m_move;
+    oq::Action m_action;
 
 protected:
 private:

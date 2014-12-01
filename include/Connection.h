@@ -9,6 +9,7 @@
 #include <boost/tuple/tuple.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
 

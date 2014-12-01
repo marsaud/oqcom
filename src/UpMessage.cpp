@@ -12,6 +12,6 @@ UpMessage::~UpMessage()
 
 void UpMessage::reset()
 {
-    m_message.clear();
-    m_login.clear();
+    m_move = oq::MOVE_NOT;
+    m_action = oq::ACTION_NONE;
 }
