@@ -16,7 +16,7 @@ public:
 
     enum Type
     {
-        PLAYER_CONNECTED, PLAYER_LEFT, WORLD_STATE, DEFAULT_TYPE
+        PLAYER_CONNECTED, PLAYER_LEFT, WELCOME, WORLD_STATE, DEFAULT_TYPE
     };
 
     template<class Archive>

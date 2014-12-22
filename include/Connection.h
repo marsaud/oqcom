@@ -25,8 +25,8 @@ public:
 
     boost::asio::ip::tcp::socket& socket();
 
-    template <typename T, typename Handler>
-    void async_write(const T& t, Handler handler)
+    template <typename T, typename H>
+    void async_write(const T& t, H handler)
     {
         // On sérialise
         std::ostringstream archive_stream;
@@ -54,21 +54,21 @@ public:
         boost::asio::async_write(m_socket, buffers, handler);
     }
 
-    template <typename T, typename Handler>
-    void async_read(T& t, Handler handler)
+    template <typename T, typename H>
+    void async_read(T& t, H handler)
     {
         // On récupère le header (10)
-        void (Connection::*f)( const boost::system::error_code&, T&, boost::tuple<Handler>)
-            = &Connection::handle_read_header<T, Handler>;
+        void (Connection::*f)( const boost::system::error_code&, T&, boost::tuple<H>)
+            = &Connection::handle_read_header<T, H>;
         boost::asio::async_read(m_socket, boost::asio::buffer(m_inbound_header),
                                 boost::bind(f,
                                             this, boost::asio::placeholders::error, boost::ref(t),
                                             boost::make_tuple(handler)));
     }
 
-    template <typename T, typename Handler>
+    template <typename T, typename H>
     void handle_read_header(const boost::system::error_code& e,
-                            T& t, boost::tuple<Handler> handler)
+                            T& t, boost::tuple<H> handler)
     {
         if (e)
         {
@@ -89,8 +89,8 @@ public:
 
             // On récupère les données (12)
             m_inbound_data.resize(m_inbound_datasize);
-            void (Connection::*f)(const boost::system::error_code&, T&, boost::tuple<Handler>)
-                = &Connection::handle_read_data<T, Handler>;
+            void (Connection::*f)(const boost::system::error_code&, T&, boost::tuple<H>)
+                = &Connection::handle_read_data<T, H>;
 
             boost::asio::async_read(m_socket, boost::asio::buffer(m_inbound_data),
                                     boost::bind(f, this,
@@ -99,9 +99,9 @@ public:
     }
 
     // Les données reçues, on les désérialise (13)
-    template <typename T, typename Handler>
+    template <typename T, typename H>
     void handle_read_data(const boost::system::error_code& e,
-                          T& t, boost::tuple<Handler> handler)
+                          T& t, boost::tuple<H> handler)
     {
         if (e)
         {
